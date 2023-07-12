@@ -1,0 +1,111 @@
+{% extends 'necta_template/base_template.html' %}
+
+{% block main_content %}
+
+{% load static %}
+
+
+<section class="content">
+        <div class="container-fluid">
+          <!-- Small boxes (Stat box) -->
+          <div class="row">
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-info">
+                <div class="inner">
+                  <h3>{{total_student}}</h3>
+
+                  <p>Total Students</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="#" class="small-box-footer"><span class="text-dark">More info <i class="fas fa-arrow-circle-right"></i> </span></a>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-danger">
+                <div class="inner">
+                  <h3>{{total_schools}}</h3>
+
+                  <p>Total Secondary Schools</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="#" class="small-box-footer"><span class="text-dark">More info <i class="fas fa-arrow-circle-right"></i> </span></a>
+              </div>
+            </div>
+            <!-- ./col -->
+            
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-warning">
+                <div class="inner">
+                  <h3>{{total_allocated}}</h3>
+
+                  <p>Total Allocated Students</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="#" class="small-box-footer"><span class="text-dark">More info <i class="fas fa-arrow-circle-right"></i> </span></a>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-success">
+                <div class="inner">
+                  <h3>{{total_unallocated}}</h3>
+
+                  <p>Total Unallocated Students</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="#" class=" small-box-footer "><span class="text-dark">More info <i class="fas fa-arrow-circle-right"></i> </span> </a>
+              </div>
+            </div>
+            <!-- ./col -->
+            
+          </div>
+      
+
+ {% comment %} <table class="table">
+  <thead class="thead-dark">
+    <tr>
+<!--      <th scope="col">#</th>-->
+      <th scope="col">School Name</th>
+      <th scope="col">School Type</th>
+      <th scope="col">Quantity Required</th>
+      <th scope="col">Region</th>
+      <th scope="col">District</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for row in special_schools %}
+    <tr>
+      <th scope="col">{{ row.name }}</th>
+      <th scope="col">{{ row.type }}</th>
+      <th scope="col">{{ row.quantity_required }}</th>
+      <th scope="col">{{ row.Mkoa }}</th>
+      <th scope="col">{{ row.Wilaya }}</th>
+<!--      <th scope="col">{{ row.sex }}</th>-->
+</tr>
+    {% endfor %}
+
+  </tbody>
+</table> {% endcomment %}
+
+        </div><!-- /.container-fluid -->
+      </section>
+
+  {% endblock main_content %}
+
+  {% block custom_js %}
+
+<!--  </script>-->
+  {% endblock custom_js %}

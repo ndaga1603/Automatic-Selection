@@ -1,0 +1,206 @@
+1{% extends 'user_templates/base_template.html' %}
+{% block page_title %}
+    View Allocation
+{% endblock page_title %}
+{% block main_content %}
+    {% load static %}
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">View Allocation</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        {% comment %} Display Messages {% endcomment %}
+                        {% if messages %}
+                            <div class="form-group">
+                                <div class="col-12">
+                                    {% for message in messages %}
+                                        {% if message.tags == "error" %}
+                                            <div class="alert alert-danger alert-dismissible fade show"
+                                                 role="alert"
+                                                 style="margin-top: 10px">
+                                                {{ message }}
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                        {% elif message.tags == "success" %}
+                                            <div class="alert alert-success alert-dismissible fade show"
+                                                 role="alert"
+                                                 style="margin-top: 10px">
+                                                {{ message }}
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                        <form action="{% url 'app:check_stu_alloc' %}" method="post">
+                            {% csrf_token %}
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label for="checkAllocation" class="form-label">Candidate Number</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           name="candidate_number"
+                                           id="checkAllocation"
+                                           placeholder="P1411.00...">
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">Check Allocation</button>
+                            </div>
+                        </form>
+                        {% comment %} Displaying Students Here {% endcomment %}
+                        <div class="card-footer">
+                            {% if data %}
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <!-- general form elements -->
+                                        <div class="card card-primary">
+                                            <div class="card-body">
+                                                <div class="m-1">
+                                                    <label>Candidate number :</label>
+                                                    <h4>{{ data.student_id.candidate_number }}</h4>
+                                                    <br />
+                                                    <label>Candidate name :</label>
+                                                    <h4>{{ data.student_id.candidate_name }}</h4>
+                                                    <br />
+                                                    <label>Candidate region :</label>
+                                                    <h4>{{ data.student_id.wilaya_id.name }}</h4>
+                                                    <br />
+                                                    <label>Candidate district :</label>
+                                                    <h4>{{ data.student_id.wilaya_id.mkoa_id.name }}</h4>
+                                                    <br />
+                                                    <label>School being allocated :</label>
+                                                    <h4>{{ data.school_id.name }}</h4>
+                                                    <br />
+                                                    <label>Region :</label>
+                                                    <h4>{{ data.school_id.wilaya_id.mkoa_id.name }}</h4>
+                                                    <br />
+                                                    <label>District :</label>
+                                                    <h4>{{ data.school_id.wilaya_id.name }}</h4>
+                                                    <br />
+                                                </div>
+                                                <div></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- /.card -->
+                    <div class="col-md-12">
+                        <!-- general form elements -->
+                        <div class="card card-primary">
+                            <div class="card-body">
+                                <div class="m-1">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Kiswahili</th>
+                                                <th scope="col">English</th>
+                                                <th scope="col">Maarifa ya Jamii</th>
+                                                <th scope="col">Hisabati</th>
+                                                <th scope="col">Sayansi</th>
+                                                <th scope="col">Average Grade</th>
+                                                <th scope="col">Average Mark</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>{{ data.student_id.kiswahili }}</td>
+                                                <td>{{ data.student_id.english }}</td>
+                                                <td>{{ data.student_id.maarifa }}</td>
+                                                <td>{{ data.student_id.hisabati }}</td>
+                                                <td>{{ data.student_id.science }}</td>
+                                                <td>{{ data.student_id.average_grade }}</td>
+                                                <td>{{ data.student_id.average_marks }}</td>
+
+                                 
+                                            </tr>
+                                           
+                                        </tbody>
+                                    </table>
+ 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+        </section>
+    {% endblock main_content %}
+    {% block custom_js %}
+        {% csrf_token %}
+        <script>
+    $(document).ready(function(){
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        // Now Working on Fetch Student after attendance date selected
+        $("#fetch_allocation").click(function(){
+
+            var number = $("#checkAllocation").val()
+                console.log(number)
+
+            $.ajax({
+                url:"{% url 'app:check_stu_alloc' %}",
+                headers: {'X-CSRFToken': csrftoken},
+                    type:'POST',
+                    data:{cand_number:number},
+            })
+
+
+            .done(function(response){
+                var json_data=JSON.parse(response);
+                //console.log(json_data)
+                //Displaying Attendance Date Input and Students Attendance
+                var div_data="<div class='form-group'><label>Student Attendance: </label></div>"
+                div_data+="<div class='form-group'><div class='row'>"
+
+                for(key in json_data)
+                {
+                    div_data+="<div class='col-lg-3'><div class='form-check'>";
+
+                    div_data+="<label class='form-check-label'>"+ json_data[key]['name']+" </label> ";
+
+                    // Displaying Present and Absent
+
+                    if(json_data[key]['status'])
+                    {
+                        div_data+="<b>[ Present ]</b>";
+                    }
+                    else
+                    {
+                        div_data+="<b>[ Absent ]</b>";
+                    }
+                    //Displaying Present and Absent Ends Here
+
+
+                    div_data+="</div></div> ";
+                }
+                div_data+="</div></div>";
+
+                $("#student_data").html(div_data);
+
+            })
+            .fail(function(){
+                alert("Invalid Credentials.")
+            })
+
+
+        })
+
+    })
+        </script>
+    {% endblock custom_js %}

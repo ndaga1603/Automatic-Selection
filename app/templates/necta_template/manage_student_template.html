@@ -1,0 +1,68 @@
+{% extends 'admin_template/base_template.html' %}
+
+{% block page_title %}
+    Students Allocations
+{% endblock page_title %}
+
+{% block main_content %}
+
+{% load static %}
+
+
+<section class="content">
+        <div class="container-fluid">
+
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title" >Students Allocations</h3>
+                            <div class="input-group input-group-sm" style="width: 200px; float: right;">
+                                <input type="text" name="table_search" class="form-control float-right" placeholder="candidateNo or name...">
+
+                                <div class="input-group-append">
+                                <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                           <div class="table-responsive">
+                                <table class="table">
+                                    <thead class="thead-light">
+                                    <tr>
+                                        <th>#candidate NO.</th>
+                                        <th>candidate Name</th>
+                                        <th>Assigned school</th>
+                                        <th>Discrict</th>
+                                        <th>Region</th>
+                                    </tr>
+                                    </thead>
+
+                                    {% for row in students %}
+                                    <tr>
+                                        <td>{{ row.student_id.candidate_number }}</td>
+                                        <td>{{ row.student_id.candidate_name }}</td>
+                                        <td>{{ row.school_id.name }}</td>
+                                        <td>{{ row.school_id.wilaya_id.name }}</td>
+                                        <td>{{ row.school_id.wilaya_id.mkoa_id.name }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+      </section>
+
+  {% endblock main_content %}
+
+{% block custom_js %}
+
+{% endblock custom_js %}

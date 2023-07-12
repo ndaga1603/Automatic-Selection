@@ -1,0 +1,100 @@
+{% extends 'user_templates/base_template.html' %}
+
+{% block page_title %}
+    Secondary Schools
+{% endblock page_title %}
+
+{% block main_content %}
+
+{% load static %}
+
+<section class="content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Shule za Wilaya ya {{wilayadata}}</h3>
+                    </div>
+                    <!-- /.card-header -->
+
+                                {% comment %} Display Messages {% endcomment %}
+                                {% if messages %}
+                                <div class="form-group">
+                                <div class="col-12">
+                                    {% for message in messages %}
+                                    {% if message.tags == "error" %}
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                    {% elif message.tags == "success" %}
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                </div>
+                                {% endif %}
+                     
+                        {% csrf_token %}
+
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th># NO.</th>
+                                    <th>school Name</th>
+                                    <th>Gender</th>
+                                    <th>Year</th>
+                                </tr>
+                                </thead>
+                                
+                                {% for row in schools %}
+                                <tr>
+                                    <td>{{ row.id }}</td>
+                                    <td>{{ row.name }}</td>
+                                    <td>{{ row.sex }}</td>
+                                    <form action="{% url 'app:get_school_student' school_id=row.id %}" method="post">
+                        {% csrf_token %}
+
+                                        <td>
+                                            <select class="yearselect" id="year" name="year">
+                                             {% for year in years %}
+
+                                            <option selected value="{{year.year}}">{{year.year}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </td>
+                                        <td>
+<!--                                             <a type="submit" href="{% url 'app:get_school_student_ad' school_id=row.id %}" class="btn btn btn-outline-success  m-2 " id="fetch_student" >Students allocated</a>-->
+                                            <button type="submit" class="btn btn btn-outline-success  m-2 ">Students allocated</button>
+                                        </td>
+
+                                    </form>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+
+                    <!-- /.card -->
+
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+      </section>
+
+  {% endblock main_content %}
+
+{% block custom_js %}
+
+{% endblock custom_js %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="hold-transition login-page"
+         style="background-image: url({% static 'dist/img/bg.jpg' %});
+                background-size: 1920px 1080px">
+        <div class="welcome-page">
+            <div class="header" style="margin-bottom: 50px; text-align: center;">
+                <h1 style="font-weight: bold; font-size: 60px; text-transform: uppercase; margin-bottom: 50px;">Welcome to psas</h1>
+                <h1 style="font-weight: bold;
+                           font-size: 34px;
+                           font-family: '', cursive">Primary Students Allocation System</h1>
+            </div>
+            <div class="buttons"
+                 style="display: flex;
+                        justify-content: center;
+                        gap: 10px">
+                <a href="{% url 'app:users_home' %}">
+                    <button type="button" class="btn btn-primary">Student</button>
+                </a>
+                <a href="{% url 'app:login' %}">
+                    <button type="button" class="btn btn-secondary">NECTA</button>
+                </a>
+                <a href="{% url 'app:login' %}">
+                    <button type="button" class="btn btn-success">TAMISEMI</button>
+                    <a />
+                </div>
+            </div>
+        </div>
+    {% endblock %}
