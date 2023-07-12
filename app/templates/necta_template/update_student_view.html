@@ -18,9 +18,9 @@
                             <form class="row g-3 needs-validation" novalidate method="POST", action="">
                                 {% csrf_token %}
                                 {{ form |crispy }}
-                                <div class="col-6">
-                                    <button class="btn btn-primary btn-sm w-100" type="submit">Update</button>
-                                </div>
+                                
+                                <button class="btn btn-primary btn-sm w-100" type="submit">Update</button>
+                               
                             </form>
                         </div>
                     </div>

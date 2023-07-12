@@ -755,6 +755,6 @@ def joke(request):
 
 class EditStudentResults(UpdateView):
     model = Student
-    fields = "__all__"
+    fields = ["candidate_name","candidate_number","kiswahili","english","maarifa","hisabati","science","average_grade","average_marks"]
     template_name = "necta_template/update_student_view.html"
     success_url = reverse_lazy("app:edit_student_results")
